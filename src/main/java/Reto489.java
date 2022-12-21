@@ -69,28 +69,23 @@ import java.util.Scanner;
 
 public class Reto489 {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        while (true) {
+        final  Scanner sc = new Scanner(System.in);
+
+        while (sc.hasNext()) {
             // input 1º linea (Comprobamos salida)
-            String input = sc.nextLine();
-            if (input.isEmpty()  || input.startsWith("0") ) {
-                break;
-            }
-            String[] cant = input.split(" ");
-            int cantGrupos = Integer.parseInt(cant[0]);
-            int cantAulas = Integer.parseInt(cant[1]);
+            int cantGrupos = sc.nextInt();
+            int cantAulas = sc.nextInt();
 
             // input 2º linea lista alumnos/grupo
-            String[] list = sc.nextLine().split(" ");
-            int[] grupos = new int[cantGrupos];
+            int[] grupos  = new int[cantGrupos];
             for (int i = 0; i < cantGrupos; i++) {
-                grupos[i] = Integer.parseInt(list[i]);
+                grupos[i] = sc.nextInt();
             }
+
             // input 3º linea espacios/aula
-            list = sc.nextLine().split(" ");
             int[] aulas = new int[cantAulas];
             for (int i = 0; i < cantAulas; i++) {
-                aulas[i] = Integer.parseInt(list[i]);
+                aulas[i] = sc.nextInt();
             }
             // Analizar
             // comprobar que hay aulas suficientes para los grupos
@@ -100,48 +95,42 @@ public class Reto489 {
             } else { // Comprobar que las aulas tienen espacio para grupos
                 // Recorremos grupos
                 for (int g = 0; g < cantGrupos; g++) {
-                    // System.out.println("grupo " + g + "(" + grupos[g] + "): ");
 
                     // Recorremos aulas
                     int elegido = -1;
                     for (int a = 0; a < cantAulas; a++) {
-                        // System.out.println("\taula " + a + " (" + aulas[a] + "): ");
 
                         // Comprobamos que aula valga para grupo
                         if (grupos[g] <= aulas[a]) {
-                            // System.out.println("\t\t- " + aulas[a] + " es válida");
+
                             // cogemos la primera que valga para grupo
                             if (elegido < 0) {
-                                // System.out.println("\t\t- 1º eleccion " + aulas[a] + " es seleccionada");
                                 elegido = a;
+
                             } else {
                                 // cogemos la que sea más pequeña
                                 if (aulas[elegido] >= aulas[a]) {
-                                    // System.out.println("\t\t- otra eleccion " + aulas[a] + " es seleccionada");
                                     elegido = a;
-                                } else {
-                                    // System.out.println("\t\t- es mayor");
                                 }
                             }
-
                         }
-
                     }
+                    // Ponemos a 0 el aula elegida
                     if (elegido >= 0) {
-                        // System.out.println("\tAnulamos la opción elegida");
                         aulas[elegido] = 0;
                     }
                 }
+
                 boolean result = true;
                 for (int i = 0; i < cantAulas; i++) {
-                    if (aulas[i] != 0)
+                    if (aulas[i] != 0){
                         result = false;
-                    break;
+                        break;
+                    }
+
                 }
-                System.out.println((result ? "SI" : "NO"));
+                System.out.println(result ? "SI" : "NO");
             }
-
-
         }
     }
 }
